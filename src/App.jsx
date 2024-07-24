@@ -15,7 +15,6 @@ function App() {
       if (caracter==texto[0]){
         console.log('found')
         setUser(e.target.value)
-        setCantidad(e.target.value.length)
         texto.splice(i,1)   
         setTexto([...texto]) 
         if (texto.length==0) {
