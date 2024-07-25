@@ -3,9 +3,13 @@ import './App.css'
 
 function App() {
   const cadena='Hola como va Max?'
-  const[a,setA]=useState(cadena.split(''))
+  const a=cadena.split('')
   const [pila,setPila]=useState([])
   const [look,setLook]=useState(0)
+  const [error,setError]=useState(0)
+
+  
+
   const apilar=(letra)=>{
     pila.push(letra)
     setPila([...pila])
@@ -22,17 +26,32 @@ function App() {
       setLook(1)
     }
   }
+
+  const errores=()=>{
+    let e =0
+    for (let i = 0; i < pila.length; i++) {
+      if (a[i]!=pila[i]) {
+        e++
+      }
+      
+    }
+    return e
+  }
   const refresh=(e)=>{
     let i = 0
     while(i<a.length){
       if (look==1 && e.target.value.slice(-1)==a[i]) {
         apilar(e.target.value.slice(-1))
-        a.shift()
-        setA([...a])
-        
+        if(a.length==pila.length){
+          alert('felicidades')
+          setError(error+errores())
+        }
         return
       }
       i++
+    }
+    if (look!=0) {
+      setError(error+1)
     }
   }
 
@@ -41,7 +60,7 @@ function App() {
       <p>{cadena}</p>
       <label htmlFor="">Texto</label>
       <textarea name="" id="caja" onKeyDown={borrar} onChange={refresh} ></textarea>
-      <p>Errores en el tipeo: </p>
+      <p>Errores en el tipeo: {error}</p>
     </>
   )
 }
